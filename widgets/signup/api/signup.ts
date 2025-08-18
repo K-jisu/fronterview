@@ -12,7 +12,7 @@ const signup = async (email: string, password: string) => {
     console.log(error);
     throw error;
   }
-  console.log("로그인 성공");
+  console.log("회원가입 성공");
 };
 
 export default signup;

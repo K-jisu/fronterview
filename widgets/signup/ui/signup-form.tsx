@@ -16,26 +16,34 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupConstants } from "../consts/signup-constants";
 import signupValidation from "../model/signup-validation";
+import type { SignupFormValues } from "../model/signup-validation";
 import signup from "../api/signup";
-
-type signupFormValues = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
 
 const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
-  } = useForm<signupFormValues>({
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<SignupFormValues>({
     resolver: zodResolver(signupValidation),
+    mode: "onChange",
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
-  const onSubmit = (data: signupFormValues) => {
-    signup(data.email, data.password);
+  const onSubmitWithEmail = async (data: SignupFormValues) => {
+    try {
+      await signup(data.email, data.password);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "회원가입에 실패했습니다.";
+      setError("root", { type: "serverSignupError", message });
+    }
   };
 
   return (
@@ -47,7 +55,7 @@ const SignupForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmitWithEmail)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">{signupConstants.signupForm.nameLabel}</Label>
             <Input
@@ -110,11 +118,16 @@ const SignupForm = () => {
             )}
           </div>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting
               ? signupConstants.signupForm.signupLoading
               : signupConstants.signupForm.signupButton}
           </Button>
+          {errors.root && (
+            <p className="text-sm text-red-500">
+              {errors.root.message as string}
+            </p>
+          )}
         </form>
 
         <Separator />

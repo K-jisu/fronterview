@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const signupValidation = z
   .object({
-    name: z.string().min(1, { message: "이름은 필수 입력 사항입니다." }),
+    name: z.string().trim().min(1, { message: "이름은 필수 입력 사항입니다." }),
     email: z.email({ message: "이메일 형식이 올바르지 않습니다." }),
     password: z
       .string()
@@ -17,5 +17,7 @@ const signupValidation = z
     message: "비밀번호가 일치하지 않습니다.",
     path: ["confirmPassword"],
   });
+
+export type SignupFormValues = z.infer<typeof signupValidation>;
 
 export default signupValidation;
