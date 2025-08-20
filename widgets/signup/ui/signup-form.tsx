@@ -38,7 +38,7 @@ const SignupForm = () => {
 
   const onSubmitWithEmail = async (data: SignupFormValues) => {
     try {
-      await signup(data.email, data.password);
+      await signup(data);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "회원가입에 실패했습니다.";
