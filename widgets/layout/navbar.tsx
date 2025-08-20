@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import UserMenu from "../../features/auth/user-menu/ui/user-menu";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -54,16 +55,7 @@ const Navbar = () => {
           </div>
 
           {/* 계정 관련 */}
-          <div className="hidden md:flex items-center space-x-2">
-            <Link href="/login">
-              <Button variant="ghost" size="sm">
-                Login
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button size="sm">Sign Up</Button>
-            </Link>
-          </div>
+          <UserMenu />
         </div>
       </div>
     </nav>
