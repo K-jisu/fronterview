@@ -10,7 +10,7 @@ export const signInConstants = {
     passwordPlaceholder: "비밀번호를 입력해 주세요",
     signInButton: "로그인",
     signInLoading: "로그인 중...",
-    googleSignIn: "Google로 계속하기",
+    gitHubSignIn: "GitHub로 계속하기",
     noAccount: "계정이 없으신가요?",
     signUp: "회원가입",
   },

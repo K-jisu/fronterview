@@ -18,7 +18,8 @@ import signInValidation from "../model/sign-in-validation";
 import type { SignInFormValues } from "../model/sign-in-validation";
 import { signInConstants } from "../consts/sign-in-constants";
 import { useRouter } from "next/navigation";
-import { signInWithEmail } from "../api/sign-in";
+import { signInWithEmail, signInWithGitHub } from "../api/sign-in";
+import Image from "next/image";
 
 const SignInForm = () => {
   const router = useRouter();
@@ -46,6 +47,13 @@ const SignInForm = () => {
     }
   };
 
+  const handleGithubSignIn = async () => {
+    try {
+      await signInWithGitHub();
+    } catch (error) {
+      console.warn(error);
+    }
+  };
   return (
     <Card>
       <CardHeader>
@@ -100,9 +108,18 @@ const SignInForm = () => {
 
         <Separator />
 
-        <Button variant="outline" className="w-full bg-transparent">
-          <Mail className="mr-2 h-4 w-4" />
-          {signInConstants.signInForm.googleSignIn}
+        <Button
+          variant="outline"
+          className="w-full bg-transparent"
+          onClick={handleGithubSignIn}
+        >
+          <Image
+            src={"/github-icon.png"}
+            alt="깃헙 로그인"
+            width={25}
+            height={25}
+          />
+          {signInConstants.signInForm.gitHubSignIn}
         </Button>
 
         <div className="text-center text-sm">
