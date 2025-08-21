@@ -1,5 +1,5 @@
-import SignupHeader from "../../widgets/signup/ui/signup-header";
-import SignupForm from "../../widgets/signup/ui/signup-form";
+import SignupForm from "../../features/auth/sign-up/ui/signup-form";
+import SignupHeader from "../../features/auth/sign-up/ui/signup-header";
 
 const SignUp = () => {
   return (

@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signupConstants } from "../consts/signup-constants";
 import signupValidation from "../model/signup-validation";
 import type { SignupFormValues } from "../model/signup-validation";
-import signup from "../api/signup";
+import signup from "../api/sign-up";
 
 const SignupForm = () => {
   const {

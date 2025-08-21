@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "../widgets/layout/navbar";
+import Navbar from "../widgets/layout/ui/navbar";
 
 export const metadata: Metadata = {
   title: "FronterView",
