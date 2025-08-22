@@ -9,7 +9,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -18,6 +17,8 @@ import { signupConstants } from "../consts/signup-constants";
 import signupValidation from "../model/signup-validation";
 import type { SignupFormValues } from "../model/signup-validation";
 import signup from "../api/sign-up";
+import Image from "next/image";
+import { signInWithGitHub } from "../../sign-in/api/sign-in";
 
 const SignupForm = () => {
   const {
@@ -43,6 +44,14 @@ const SignupForm = () => {
       const message =
         error instanceof Error ? error.message : "회원가입에 실패했습니다.";
       setError("root", { type: "serverSignupError", message });
+    }
+  };
+
+  const handleGithubSignIn = async () => {
+    try {
+      await signInWithGitHub();
+    } catch (error) {
+      console.warn(error);
     }
   };
 
@@ -132,9 +141,18 @@ const SignupForm = () => {
 
         <Separator />
 
-        <Button variant="outline" className="w-full bg-transparent">
-          <Mail className="mr-2 h-4 w-4" />
-          {signupConstants.signupForm.googleLogin}
+        <Button
+          variant="outline"
+          className="w-full bg-transparent"
+          onClick={handleGithubSignIn}
+        >
+          <Image
+            src={"/github-icon.png"}
+            alt="깃헙 로그인"
+            width={25}
+            height={25}
+          />
+          {signupConstants.signupForm.gitHubLogin}
         </Button>
 
         <div className="text-center text-sm">

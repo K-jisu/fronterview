@@ -14,7 +14,7 @@ export const signupConstants = {
     confirmPasswordPlaceholder: "비밀번호를 다시 입력해 주세요",
     signupButton: "회원가입",
     signupLoading: "회원가입 중...",
-    googleLogin: "Google로 계속하기",
+    gitHubLogin: "GitGub로 계속하기",
     alreadyHaveAccount: "이미 계정이 있으신가요?",
     login: "로그인",
   },

@@ -11,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Mail } from "lucide-react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import signInValidation from "../model/sign-in-validation";
@@ -54,6 +53,7 @@ const SignInForm = () => {
       console.warn(error);
     }
   };
+
   return (
     <Card>
       <CardHeader>
