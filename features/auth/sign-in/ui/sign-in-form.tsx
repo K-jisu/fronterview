@@ -17,11 +17,12 @@ import signInValidation from "../model/sign-in-validation";
 import type { SignInFormValues } from "../model/sign-in-validation";
 import { signInConstants } from "../consts/sign-in-constants";
 import { signInWithEmail, signInWithGitHub } from "../api/sign-in";
-import { ToastContainer } from "react-toastify";
 import Image from "next/image";
 import { successToast } from "../../../../shared/model/success-toast";
+import { useRouter } from "next/navigation";
 
 const SignInForm = () => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -38,7 +39,11 @@ const SignInForm = () => {
 
   const onSubmitWithEmail = async (data: SignInFormValues) => {
     try {
-      await signInWithEmail(data.email, data.password);
+      const { data: user } = await signInWithEmail(data.email, data.password);
+      if (user) {
+        successToast("로그인에 성공했습니다!");
+        router.push("/");
+      }
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "로그인에 실패했습니다.";

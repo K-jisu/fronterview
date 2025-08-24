@@ -1,12 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { createClient } from "../../../../shared/api/supabase/server";
 import { redirect } from "next/navigation";
 
 export const signInWithEmail = async (email: string, password: string) => {
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -14,9 +13,7 @@ export const signInWithEmail = async (email: string, password: string) => {
     console.log(error);
     throw error;
   }
-  console.log("로그인 성공");
-  revalidatePath("/", "layout");
-  redirect("/");
+  return { data, error };
 };
 
 export const signInWithGitHub = async () => {
