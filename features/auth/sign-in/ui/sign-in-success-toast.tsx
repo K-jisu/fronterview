@@ -1,23 +1,35 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { successToast } from "../../../../shared/model/success-toast";
 
-const SignInSuccessToast = () => {
-  const searchParam = useSearchParams();
+export default function SignInSuccessToast() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const firedRef = useRef(false);
+
+  const signInStatus = searchParams.get("signIn");
+
   useEffect(() => {
-    const signInStatus = searchParam.get("signIn");
+    if (signInStatus !== "success") return;
+    if (firedRef.current) return; // StrictMode 중복 방지
 
-    if (signInStatus === "success") {
-      successToast("Github 로그인에 성공했습니다!");
+    firedRef.current = true;
+    successToast("Github 로그인에 성공했습니다!");
 
-      const url = new URL(window.location.href);
-      url.searchParams.delete("signIn");
-      window.history.replaceState({}, "", url.toString());
-    }
-  }, [searchParam]);
+    // signInStatus 파라미터 제거 후 URL 정리
+    const next = new URLSearchParams(searchParams);
+    next.delete("signIn");
+
+    // 쿼리가 비면 순수 pathname으로, 아니면 새 쿼리로
+    const nextUrl = next.toString()
+      ? `${pathname}?${next.toString()}`
+      : pathname;
+
+    router.replace(nextUrl);
+  }, [signInStatus, router, pathname, searchParams]);
+
   return null;
-};
-
-export default SignInSuccessToast;
+}
