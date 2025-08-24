@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "../widgets/layout/ui/navbar";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "FronterView",
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
+        <ToastContainer />
         <Navbar />
         <main className="min-h-screen bg-gray-50">{children}</main>
       </body>

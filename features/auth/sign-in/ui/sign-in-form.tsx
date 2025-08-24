@@ -16,12 +16,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import signInValidation from "../model/sign-in-validation";
 import type { SignInFormValues } from "../model/sign-in-validation";
 import { signInConstants } from "../consts/sign-in-constants";
-import { useRouter } from "next/navigation";
 import { signInWithEmail, signInWithGitHub } from "../api/sign-in";
+import { ToastContainer } from "react-toastify";
 import Image from "next/image";
+import { successToast } from "../../../../shared/model/success-toast";
 
 const SignInForm = () => {
-  const router = useRouter();
   const {
     handleSubmit,
     register,
