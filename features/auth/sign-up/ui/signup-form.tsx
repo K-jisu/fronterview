@@ -19,8 +19,11 @@ import type { SignupFormValues } from "../model/signup-validation";
 import signup from "../api/sign-up";
 import Image from "next/image";
 import { signInWithGitHub } from "../../sign-in/api/sign-in";
+import { successToast } from "../../../../shared/model/success-toast";
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -39,7 +42,11 @@ const SignupForm = () => {
 
   const onSubmitWithEmail = async (data: SignupFormValues) => {
     try {
-      await signup(data);
+      const { data: user } = await signup(data);
+      if (user) {
+        successToast("회원가입에 성공했습니다!");
+        router.push("/signin");
+      }
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "회원가입에 실패했습니다.";

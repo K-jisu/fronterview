@@ -11,7 +11,7 @@ const signup = async (formData: FormData) => {
   const supabase = await createClient();
   const { email, password, name } = formData;
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: { data: { name } },
@@ -20,7 +20,7 @@ const signup = async (formData: FormData) => {
     console.log(error);
     throw error;
   }
-  console.log("회원가입 성공");
+  return { data, error };
 };
 
 export default signup;

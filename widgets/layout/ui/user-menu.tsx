@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import signOut from "../../../features/auth/sign-out/api/sign-out";
+import { successToast } from "../../../shared/model/success-toast";
 
 type UserMenuProps = {
   email: string | undefined;
@@ -11,7 +12,12 @@ type UserMenuProps = {
 
 const UserMenu = ({ email, name }: UserMenuProps) => {
   const handleLogout = async () => {
-    signOut();
+    const signOutError = await signOut();
+    if (signOutError) {
+      successToast("로그아웃에 실패했습니다.");
+    } else {
+      successToast("로그아웃에 성공했습니다.");
+    }
   };
 
   if (!email && !name) {
