@@ -35,14 +35,14 @@ const NavigationTab = () => {
       {/* 네비게이션 */}
       <div className="hidden md:flex items-center space-x-1">
         {navItems.map((item) => (
-          <Link key={item.href} href={item.href}>
-            <Button
-              variant={isActive(item.href) ? "default" : "ghost"}
-              size="sm"
-            >
-              {item.label}
-            </Button>
-          </Link>
+          <Button
+            key={item.href}
+            asChild
+            variant={isActive(item.href) ? "default" : "ghost"}
+            size="sm"
+          >
+            <Link href={item.href}>{item.label}</Link>
+          </Button>
         ))}
       </div>
     </>
