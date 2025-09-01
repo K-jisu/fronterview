@@ -166,7 +166,7 @@ const SignupForm = () => {
           <span className="text-gray-600">
             {signupConstants.signupForm.alreadyHaveAccount}
           </span>
-          <Link href="/login" className="text-blue-600 hover:underline">
+          <Link href="/signin" className="text-blue-600 hover:underline">
             {signupConstants.signupForm.login}
           </Link>
         </div>
