@@ -18,10 +18,15 @@ export const signInWithEmail = async (email: string, password: string) => {
 
 export const signInWithGitHub = async () => {
   const supabase = await createClient();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!siteUrl) {
+    console.error("signInWithGitHub: NEXT_PUBLIC_SITE_URL is not set");
+    throw new Error("Environment variable NEXT_PUBLIC_SITE_URL is not set");
+  }
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+      redirectTo: new URL(`/auth/callback`, siteUrl).toString(),
     },
   });
 
